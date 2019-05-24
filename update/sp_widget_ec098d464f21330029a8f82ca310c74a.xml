@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function() {
+	/* widget controller */
+	var c = this;
+
+	//If [title] is left blank, use this Title
+	if(c.options.title =='') {
+		c.options.title = "Safety & Security Contacts";
+	}
+
+	//Only display the non-emergency Help Link if the [kb_url] field is populated
+	c.data.show_link = false;
+
+	if(c.options.kb_url !=''){
+		c.data.show_link = true;
+
+		//If [kb_title] is left blank, use the value of [kb_url]
+		if(c.options.kb_title ==''){
+			c.options.kb_title = c.options.kb_url;
+		}	
+	}
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.contact-row{
+  overflow:auto;
+  padding:10px;
+  border-bottom: 2px solid #f7f7f7;
+}
+
+.label-left{
+  float:left;
+  width:35%;
+  font-weight:bold;
+}
+
+.label-right{
+  float:right;
+  width:65%;
+}
+
+a {
+  color:#000000;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>support_contacts</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Support Contacts</name>
+        <option_schema>[{"name":"title","section":"Presentation","label":"Title","type":"string"},{"name":"daytime_phone","section":"Data","label":"Daytime phone","type":"string"},{"name":"emergency_phone","section":"Data","label":"Emergency phone","type":"string"},{"name":"kb_url","section":"Data","label":"KB URL","type":"string"},{"name":"kb_title","section":"Data","label":"KB Title","type":"string"}]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {  /* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-05-22 14:48:19</sys_created_on>
+        <sys_id>ec098d464f21330029a8f82ca310c74a</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Support Contacts</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sp_widget_ec098d464f21330029a8f82ca310c74a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-05-22 16:44:01</sys_updated_on>
+        <template><![CDATA[<form class="form-horizontal">
+  <!-- Title from Widget Instance Properties -->
+  <h3 class="text-primary">{{::c.options.title}}</h3>
+
+  <!-- Daytime Security -->
+  <div class="contact-row">
+    <div class="label-left" >${Safety and Security - During Business Hours}</div>
+    <div class="label-right"><a href="tel:{{c.options.safety_phone}}">{{::c.options.daytime_phone}}</a></div>
+  </div>
+
+  <!-- After-hours Security -->
+  <div class="contact-row">
+    <div class="label-left">${Safety and Security - After Hours}</div>
+    <div class="label-right"><a href="tel:{{c.options.emergency_phone}}">{{::c.options.emergency_phone}}</a></div>
+  </div>
+
+  <!-- Non-emergency Help Link -->
+  <div class="contact-row" ng-if="c.data.show_link">
+    <div class="label-left" >${Our Corporate Safety and Security Standards}</div>
+    <div class="label-right"><a href="{{::c.options.kb_url}}" target="_blank">{{::c.options.kb_title}}</a></div>
+  </div>
+</form>
+]]></template>
+    </sp_widget>
+</record_update>
